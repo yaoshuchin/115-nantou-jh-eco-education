@@ -1,0 +1,1561 @@
+const fs = require('fs');
+
+const htmlContent = `<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>南投縣立南投國中 115學年度環境教育考評成果旗艦網</title>
+  <meta name="description" content="南投縣立南投國中 115學年度環境教育考評複評到校訪視輔導成果旗艦網：最新專題影片、全彩成果簡報手冊、永續綠校園海報、校長報告講稿、委員 Q&A 擬答、簡報校對診斷與指定任務文件。" />
+  <link rel="icon" href="images/image108.png" type="image/png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', '"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            eco: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            forest: {
+              DEFAULT: '#1b4332',
+              dark: '#081c15',
+              light: '#2d6a4f',
+              accent: '#52b788',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    .card-hover {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-eco-500 selection:text-white min-h-screen flex flex-col">
+
+  <!-- ================= TOP NOTIFICATION BAR ================= -->
+  <div class="bg-gradient-to-r from-forest-dark via-forest to-eco-800 text-emerald-100 text-xs sm:text-sm py-2 px-4 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-semibold border border-emerald-400/30">
+          考評專區
+        </span>
+        <span class="font-medium">南投縣立南投國中 115 學年度環境教育考評複評 到校訪視輔導</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-medium">
+        <span class="flex items-center gap-1"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> 115 年 11 月 2 日 (一)</span>
+        <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5"></i> 報告人：劉松彥 校長</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="sticky top-0 z-40 glass-nav border-b border-slate-200/90 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <!-- Logo / Title -->
+        <a href="#hero" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-eco-600 to-forest flex items-center justify-center text-white shadow-md shadow-eco-600/20 group-hover:scale-105 transition-transform">
+            <i data-lucide="leaf" class="w-6 h-6 sm:w-7 sm:h-7"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold tracking-widest text-eco-700 uppercase">南投縣立南投國中</span>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">NTJH</span>
+            </div>
+            <h1 class="text-base sm:text-xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
+              環境教育考評成果網
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-eco-100 text-eco-800 border border-eco-200">115學年度</span>
+            </h1>
+          </div>
+        </a>
+
+        <!-- Desktop Navigation: Newly Added Multimedia + 4 Directions -->
+        <nav class="hidden xl:flex items-center gap-1 text-sm font-semibold text-slate-700">
+          <a href="#media-section" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1 text-purple-700">
+            <i data-lucide="video" class="w-4 h-4"></i>
+            <span>專題影片</span>
+          </a>
+          <a href="#books-section" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1 text-amber-700">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>成果簡報與手冊</span>
+          </a>
+          <a href="#poster-section" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1 text-teal-700">
+            <i data-lucide="map" class="w-4 h-4"></i>
+            <span>綠校園海報</span>
+          </a>
+          <span class="text-slate-300">|</span>
+          <a href="#direction-1" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1">
+            <i data-lucide="mic" class="w-4 h-4 text-emerald-600"></i>
+            <span>1.校長講稿</span>
+          </a>
+          <a href="#direction-2" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-600"></i>
+            <span>2.委員Q&A</span>
+          </a>
+          <a href="#direction-3" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1">
+            <i data-lucide="edit-3" class="w-4 h-4 text-teal-600"></i>
+            <span>3.簡報優化</span>
+          </a>
+          <a href="#direction-4" class="px-2.5 py-2 rounded-lg hover:text-eco-700 hover:bg-eco-50 transition-colors flex items-center gap-1">
+            <i data-lucide="folder-check" class="w-4 h-4 text-purple-600"></i>
+            <span>4.指定任務</span>
+          </a>
+        </nav>
+
+        <!-- Right Quick Actions -->
+        <div class="flex items-center gap-2">
+          <button onclick="openSlidesModal(1)" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-eco-600 to-forest text-white text-xs sm:text-sm font-semibold shadow-md shadow-eco-600/20 hover:brightness-110 active:scale-95 transition-all">
+            <i data-lucide="presentation" class="w-4 h-4 text-amber-300"></i>
+            <span>播放 27 頁訪視簡報</span>
+          </button>
+
+          <!-- Mobile Hamburger Menu Button -->
+          <button id="mobileMenuBtn" class="xl:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobileMenu" class="hidden xl:hidden border-t border-slate-200 bg-white/95 px-4 pt-3 pb-6 space-y-2">
+      <a href="#media-section" class="mobile-nav-link block px-3 py-2 rounded-md font-semibold text-purple-700 hover:bg-purple-50">🎥 專題影片專區（2部紀錄片）</a>
+      <a href="#books-section" class="mobile-nav-link block px-3 py-2 rounded-md font-semibold text-amber-700 hover:bg-amber-50">📑 成果簡報與手冊（3冊手冊+PPTX）</a>
+      <a href="#poster-section" class="mobile-nav-link block px-3 py-2 rounded-md font-semibold text-teal-700 hover:bg-teal-50">🗺️ 永續綠校園全景海報</a>
+      <hr class="border-slate-200 my-1" />
+      <a href="#direction-1" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-eco-50">1. 校長報告講稿／每頁提詞重點</a>
+      <a href="#direction-2" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-eco-50">2. 訪視委員常見提問與 Q&A 擬答</a>
+      <a href="#direction-3" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-eco-50">3. 投影片內容校對與排版優化建議</a>
+      <a href="#direction-4" class="mobile-nav-link block px-3 py-2 rounded-md font-medium text-slate-700 hover:bg-eco-50">4. 其他指定任務與文件產出專區</a>
+      <button onclick="openSlidesModal(1); toggleMobileMenu();" class="w-full text-left flex items-center justify-between px-3 py-2 rounded-md font-medium text-amber-700 hover:bg-amber-50">
+        <span>開啟 27 頁線上簡報檢視器</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION WITH MEDIA SWITCHER ================= -->
+  <section id="hero" class="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-forest to-slate-900 text-white pt-10 pb-16 sm:pt-16 sm:pb-24">
+    <!-- Decor Elements -->
+    <div class="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-emerald-500/20 blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <!-- Hero Left Info -->
+        <div class="lg:col-span-7 space-y-5 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 text-xs sm:text-sm font-semibold">
+            <i data-lucide="sparkles" class="w-4 h-4 text-emerald-400"></i>
+            <span>南投縣 115 學年度環境教育考評複評 · 訪視輔導旗艦平台</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-tight">
+            永續投中 · <span class="bg-gradient-to-r from-emerald-300 via-teal-200 to-green-400 bg-clip-text text-transparent">綠色共好</span>
+          </h1>
+
+          <p class="text-sm sm:text-lg text-emerald-100/90 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            完整收錄最新<strong>專題紀錄片</strong>、<strong>全彩成果簡報手冊</strong>、<strong>綠校園全景海報</strong>與四大呈現面向：<strong>校長 10~15 分鐘口頭講稿</strong>、<strong>委員關鍵 Q&A 擬答</strong>、<strong>簡報校對診斷</strong>與<strong>指定任務檢核文件庫</strong>。
+          </p>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+            <a href="#media-section" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:brightness-110 text-white font-bold text-xs sm:text-sm shadow-lg shadow-purple-600/30 active:scale-95 transition-all">
+              <i data-lucide="play-circle" class="w-4 h-4 text-amber-300"></i>
+              <span>觀看 2 部紀錄片</span>
+            </a>
+            <a href="#books-section" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:brightness-110 text-white font-bold text-xs sm:text-sm shadow-lg shadow-amber-600/30 active:scale-95 transition-all">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              <span>翻閱 3 冊成果手冊</span>
+            </a>
+            <button onclick="openSlidesModal(1)" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white font-semibold text-xs sm:text-sm border border-white/25 active:scale-95 transition-all">
+              <i data-lucide="presentation" class="w-4 h-4 text-emerald-300"></i>
+              <span>27頁簡報線上看</span>
+            </button>
+          </div>
+
+          <!-- Reporter and Date -->
+          <div class="pt-4 border-t border-emerald-800/60 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-emerald-200/90 font-medium">
+            <span class="flex items-center gap-1.5"><i data-lucide="user" class="w-4 h-4 text-emerald-400"></i> 報告人：<strong>劉松彥 校長</strong></span>
+            <span class="flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4 text-emerald-400"></i> 訪視日期：115 年 11 月 2 日 (一)</span>
+            <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-4 h-4 text-emerald-400"></i> 南投縣南投市祖祠路360號</span>
+          </div>
+        </div>
+
+        <!-- Hero Right: Interactive Multimedia Hub Card -->
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-purple-500 via-emerald-400 to-teal-400 opacity-30 blur-lg"></div>
+
+            <div class="relative bg-slate-900/95 border border-emerald-700/50 rounded-2xl p-4 sm:p-5 shadow-2xl backdrop-blur-xl space-y-4">
+              <!-- Switcher Tabs -->
+              <div class="flex items-center justify-between border-b border-emerald-800/80 pb-3">
+                <div class="flex items-center gap-1.5 text-xs">
+                  <button onclick="switchHeroTab('video')" id="heroTab-video" class="hero-tab-btn active px-2.5 py-1 rounded-lg font-bold bg-purple-600 text-white transition-all">
+                    🎥 專題影片
+                  </button>
+                  <button onclick="switchHeroTab('poster')" id="heroTab-poster" class="hero-tab-btn px-2.5 py-1 rounded-lg font-semibold text-slate-300 hover:text-white transition-all">
+                    🗺️ 綠校園海報
+                  </button>
+                  <button onclick="switchHeroTab('books')" id="heroTab-books" class="hero-tab-btn px-2.5 py-1 rounded-lg font-semibold text-slate-300 hover:text-white transition-all">
+                    📖 3冊電子書
+                  </button>
+                </div>
+                <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">115_NTJH</span>
+              </div>
+
+              <!-- Tab Content 1: Video Player -->
+              <div id="heroContent-video" class="space-y-2">
+                <div class="rounded-xl overflow-hidden bg-black aspect-video relative shadow-lg">
+                  <video controls class="w-full h-full object-cover" preload="metadata" poster="images/image1.jpeg">
+                    <source src="1151102-115南投國中_環境教育考評南投國中超狂環保課：從太陽能車到復古嘉年華.mp4" type="video/mp4">
+                    您的瀏覽器不支援影片播放。
+                  </video>
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-300 pt-1">
+                  <span class="truncate font-medium text-emerald-300">🎬 南投國中超狂環保課：從太陽能車到復古嘉年華</span>
+                  <a href="#media-section" class="text-purple-400 hover:text-purple-300 underline shrink-0 font-semibold">看完整2部</a>
+                </div>
+              </div>
+
+              <!-- Tab Content 2: Poster -->
+              <div id="heroContent-poster" class="hidden space-y-2">
+                <div class="rounded-xl overflow-hidden bg-black aspect-video relative shadow-lg cursor-pointer group" onclick="openLightbox('1151102-115南投國中_環境教育考評南投國中永續綠校園.png', '南投國中永續綠校園全景導覽海報')">
+                  <img src="1151102-115南投國中_環境教育考評南投國中永續綠校園.png" alt="南投國中永續綠校園海報" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
+                    <span class="text-xs text-white font-medium flex items-center gap-1">
+                      <i data-lucide="zoom-in" class="w-3.5 h-3.5 text-emerald-400"></i> 點擊放大檢視 5.7 MB 高解析全景海報
+                    </span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-300 pt-1">
+                  <span class="font-medium text-teal-300">🗺️ 南投國中永續綠校園 · 旗艦全景海報</span>
+                  <a href="#poster-section" class="text-teal-400 hover:text-teal-300 underline font-semibold">專區詳情</a>
+                </div>
+              </div>
+
+              <!-- Tab Content 3: 3 Books -->
+              <div id="heroContent-books" class="hidden space-y-2.5">
+                <div class="grid grid-cols-3 gap-2">
+                  <a href="1151102-115南投國中_環境教育考評南投國中綠色校園永續旅程.pdf" target="_blank" class="p-2.5 rounded-xl bg-purple-900/60 border border-purple-700/50 hover:border-purple-400 transition-all text-center group">
+                    <i data-lucide="book-open" class="w-6 h-6 text-purple-300 mx-auto mb-1 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-[10px] font-bold text-white block truncate">永續旅程</span>
+                    <span class="text-[9px] text-purple-200">PDF 36MB</span>
+                  </a>
+                  <a href="1151102-115南投國中_環境教育考評南投國中綠色永續手札.pdf" target="_blank" class="p-2.5 rounded-xl bg-amber-900/60 border border-amber-700/50 hover:border-amber-400 transition-all text-center group">
+                    <i data-lucide="bookmark" class="w-6 h-6 text-amber-300 mx-auto mb-1 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-[10px] font-bold text-white block truncate">永續手札</span>
+                    <span class="text-[9px] text-amber-200">PDF 32MB</span>
+                  </a>
+                  <a href="1151102-115南投國中_環境教育考評綠色校園永續剪貼簿.pdf" target="_blank" class="p-2.5 rounded-xl bg-emerald-900/60 border border-emerald-700/50 hover:border-emerald-400 transition-all text-center group">
+                    <i data-lucide="file-text" class="w-6 h-6 text-emerald-300 mx-auto mb-1 group-hover:scale-110 transition-transform"></i>
+                    <span class="text-[10px] font-bold text-white block truncate">永續剪貼簿</span>
+                    <span class="text-[9px] text-emerald-200">PDF 39MB</span>
+                  </a>
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-300 pt-1">
+                  <span class="font-medium text-amber-300">📖 3 冊全彩出版成果電子手冊</span>
+                  <a href="#books-section" class="text-amber-400 hover:text-amber-300 underline font-semibold">進入專區</a>
+                </div>
+              </div>
+
+              <!-- Bottom Metrics Grid -->
+              <div class="grid grid-cols-3 gap-2 pt-3 border-t border-emerald-800/60 text-center">
+                <div class="p-2 rounded-lg bg-emerald-950/60 border border-emerald-800/40">
+                  <div class="text-base font-black text-amber-400">100%</div>
+                  <div class="text-[10px] text-emerald-200/80">環教人員認證</div>
+                </div>
+                <div class="p-2 rounded-lg bg-emerald-950/60 border border-emerald-800/40">
+                  <div class="text-base font-black text-emerald-300">全國第1</div>
+                  <div class="text-[10px] text-emerald-200/80">海洋繪本首獎</div>
+                </div>
+                <div class="p-2 rounded-lg bg-emerald-950/60 border border-emerald-800/40">
+                  <div class="text-base font-black text-teal-300">全縣佳作</div>
+                  <div class="text-[10px] text-emerald-200/80">AI綠能小車教案</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MEDIA STATS BAR ================= -->
+  <section class="bg-white border-y border-slate-200 shadow-sm relative z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 text-center">
+        <a href="#media-section" class="p-3 rounded-xl bg-purple-50/70 border border-purple-100 hover:border-purple-300 transition-all">
+          <div class="text-xl sm:text-2xl font-black text-purple-700">2 部</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">專題紀錄片</div>
+          <div class="text-[10px] text-slate-400">典範片 & 超狂環保課</div>
+        </a>
+        <a href="#books-section" class="p-3 rounded-xl bg-amber-50/70 border border-amber-100 hover:border-amber-300 transition-all">
+          <div class="text-xl sm:text-2xl font-black text-amber-700">3 冊</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">成果出版手冊</div>
+          <div class="text-[10px] text-slate-400">旅程、手札與剪貼簿</div>
+        </a>
+        <a href="#poster-section" class="p-3 rounded-xl bg-teal-50/70 border border-teal-100 hover:border-teal-300 transition-all">
+          <div class="text-xl sm:text-2xl font-black text-teal-700">1 幅</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">旗艦全景海報</div>
+          <div class="text-[10px] text-slate-400">綠校園空間導覽</div>
+        </a>
+        <button onclick="openSlidesModal(1)" class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100 hover:border-emerald-300 transition-all text-center">
+          <div class="text-xl sm:text-2xl font-black text-emerald-700">27 頁</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">訪視簡報 PPTX</div>
+          <div class="text-[10px] text-slate-400">含劉松彥校長講稿</div>
+        </button>
+        <a href="#direction-2" class="p-3 rounded-xl bg-blue-50/70 border border-blue-100 hover:border-blue-300 transition-all">
+          <div class="text-xl sm:text-2xl font-black text-blue-700">8 大題</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">委員考題擬答</div>
+          <div class="text-[10px] text-slate-400">直擊盲點與防禦策略</div>
+        </a>
+        <a href="#direction-4" class="p-3 rounded-xl bg-slate-50 border border-slate-200 hover:border-eco-300 transition-all">
+          <div class="text-xl sm:text-2xl font-black text-eco-700">110 張</div>
+          <div class="text-xs font-semibold text-slate-700 mt-0.5">真實活動相片</div>
+          <div class="text-[10px] text-slate-400">全圖支援高清燈箱</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 1: VIDEOS SHOWCASE ================= -->
+  <section id="media-section" class="py-16 sm:py-20 bg-slate-900 text-white relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 relative z-10">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-5">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-semibold border border-purple-400/20">
+            <i data-lucide="video" class="w-3.5 h-3.5"></i> 影音劇院專區
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight mt-2 flex items-center gap-2">
+            南投國中環境教育專題紀錄片
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-400 mt-1">
+            資料夾新增之官方紀錄片與精彩影音，支援直接線上播放與下載原檔。
+          </p>
+        </div>
+        <div class="text-xs text-purple-300 font-medium">
+          🎬 高畫質 MP4 格式 ｜ 全裝置流暢播放
+        </div>
+      </div>
+
+      <!-- 2 Videos Big Grid -->
+      <div class="grid lg:grid-cols-2 gap-8">
+        <!-- Video 1 -->
+        <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl flex flex-col group">
+          <div class="bg-black aspect-video relative flex items-center justify-center overflow-hidden">
+            <video controls class="w-full h-full object-cover" preload="metadata">
+              <source src="1151102-115南投國中_環境教育考評南投國中：環境教育的典範.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold border border-purple-400/30">官方考評專題片</span>
+                <span class="text-xs text-slate-400">45.1 MB ｜ 全方位成果總覽</span>
+              </div>
+              <h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                南投國中：環境教育的典範
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                完整紀錄南投國中推動環境教育之典範歷程：從健全組織治理、法定時數落實、跨域 AI 綠能教學、特教開心農場，到全國海洋繪本榮奪首獎，展現南投學子深刻的永續實踐力。
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400">適用：委員訪視導覽、校務會議、家長宣導</span>
+              <a
+                href="1151102-115南投國中_環境教育考評南投國中：環境教育的典範.mp4"
+                download
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold transition-all shadow-md active:scale-95"
+              >
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>下載原檔 (45MB)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="bg-slate-950 rounded-3xl border border-slate-800 overflow-hidden shadow-2xl flex flex-col group">
+          <div class="bg-black aspect-video relative flex items-center justify-center overflow-hidden">
+            <video controls class="w-full h-full object-cover" preload="metadata">
+              <source src="1151102-115南投國中_環境教育考評南投國中超狂環保課：從太陽能車到復古嘉年華.mp4" type="video/mp4">
+              您的瀏覽器不支援影片播放。
+            </video>
+          </div>
+          <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-400/30">精華短影音</span>
+                <span class="text-xs text-slate-400">9.5 MB ｜ 創新教學精選</span>
+              </div>
+              <h3 class="text-xl font-bold text-white group-hover:text-emerald-300 transition-colors">
+                南投國中超狂環保課：從太陽能車到復古嘉年華
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                熱血直擊全縣教案競賽佳作《太陽能小車組裝與 AI 綠能宣言》上課實況，以及全校首創『綠能年代。復古 fun 店趴』低碳懷舊運動會，充滿創意與青春活力！
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400">特色：動手做 STEM、生活減碳、二手造景</span>
+              <a
+                href="1151102-115南投國中_環境教育考評南投國中超狂環保課：從太陽能車到復古嘉年華.mp4"
+                download
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all shadow-md active:scale-95"
+              >
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>下載原檔 (9.5MB)</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: PUBLICATIONS & PRESENTATION HANDBOOKS ================= -->
+  <section id="books-section" class="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-5">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold border border-amber-200">
+            <i data-lucide="book-open" class="w-3.5 h-3.5 text-amber-600"></i> 出版手冊與簡報
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+            3 冊全彩成果電子書 ＆ 原始簡報原檔
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            資料夾新增之三本出版成果手冊與原始 27 頁 PPTX 簡報，支援直接線上閱讀與一鍵下載。
+          </p>
+        </div>
+        <div class="text-xs text-amber-800 font-semibold">
+          📚 PDF 全彩電子書 ＋ PowerPoint 原始檔
+        </div>
+      </div>
+
+      <!-- 4 Publication Cards Grid -->
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Book 1: 永續旅程 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between space-y-5 card-hover">
+          <div class="space-y-3">
+            <div class="w-16 h-22 rounded-2xl bg-gradient-to-br from-purple-700 to-indigo-800 flex flex-col items-center justify-center text-white shadow-md">
+              <i data-lucide="book-open" class="w-7 h-7 mb-1"></i>
+              <span class="text-[10px] font-bold">手冊</span>
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[11px] font-bold">全彩出版品</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1.5 leading-snug">
+                南投國中綠色校園永續旅程
+              </h3>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                系統性彙整環境教育推動藍圖、跨領域教案亮點、學生競賽拔尖與校園生態永續之完整成果手冊。
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href="1151102-115南投國中_環境教育考評南投國中綠色校園永續旅程.pdf" target="_blank" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-1 transition-all">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i> 線上閱讀
+            </a>
+            <a href="1151102-115南投國中_環境教育考評南投國中綠色校園永續旅程.pdf" download class="text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> 36 MB
+            </a>
+          </div>
+        </div>
+
+        <!-- Book 2: 永續手札 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between space-y-5 card-hover">
+          <div class="space-y-3">
+            <div class="w-16 h-22 rounded-2xl bg-gradient-to-br from-amber-600 to-orange-700 flex flex-col items-center justify-center text-white shadow-md">
+              <i data-lucide="bookmark" class="w-7 h-7 mb-1"></i>
+              <span class="text-[10px] font-bold">手札</span>
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold">成果專題手札</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1.5 leading-snug">
+                南投國中綠色永續手札
+              </h3>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                深情記錄校園在地深耕、特教開心農場泥土芬芳、日常減塑生活實踐與親師生綠色生活美學。
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href="1151102-115南投國中_環境教育考評南投國中綠色永續手札.pdf" target="_blank" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-white font-bold flex items-center gap-1 transition-all">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i> 線上閱讀
+            </a>
+            <a href="1151102-115南投國中_環境教育考評南投國中綠色永續手札.pdf" download class="text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> 32 MB
+            </a>
+          </div>
+        </div>
+
+        <!-- Book 3: 永續剪貼簿 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between space-y-5 card-hover">
+          <div class="space-y-3">
+            <div class="w-16 h-22 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 flex flex-col items-center justify-center text-white shadow-md">
+              <i data-lucide="file-text" class="w-7 h-7 mb-1"></i>
+              <span class="text-[10px] font-bold">剪貼簿</span>
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">精華剪貼簿</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1.5 leading-snug">
+                綠色校園永續剪貼簿
+              </h3>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                精彩收錄活動歷程照片、得獎獎狀、學生精彩手繪學習單、社區淨街與復古運動會翦影。
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <a href="1151102-115南投國中_環境教育考評綠色校園永續剪貼簿.pdf" target="_blank" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1 transition-all">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i> 線上閱讀
+            </a>
+            <a href="1151102-115南投國中_環境教育考評綠色校園永續剪貼簿.pdf" download class="text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> 39 MB
+            </a>
+          </div>
+        </div>
+
+        <!-- Book 4: 原始 PPTX 簡報 -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm flex flex-col justify-between space-y-5 card-hover">
+          <div class="space-y-3">
+            <div class="w-16 h-22 rounded-2xl bg-gradient-to-br from-rose-600 to-red-700 flex flex-col items-center justify-center text-white shadow-md">
+              <i data-lucide="presentation" class="w-7 h-7 mb-1 text-amber-300"></i>
+              <span class="text-[10px] font-bold">PPTX</span>
+            </div>
+            <div>
+              <span class="px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold">訪視簡報原檔</span>
+              <h3 class="text-base font-bold text-slate-900 mt-1.5 leading-snug">
+                115南投國中_環境教育考評複評到校輔導.pptx
+              </h3>
+              <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                全彩 27 頁原始訪視簡報，內建 110 張高解析活動佐證照片，劉松彥校長報告原檔。
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <button onclick="openSlidesModal(1)" class="px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-bold flex items-center gap-1 transition-all">
+              <i data-lucide="eye" class="w-3.5 h-3.5"></i> 線上簡報
+            </button>
+            <a href="115南投國中_環境教育考評複評到校輔導.pptx" download class="text-slate-500 hover:text-slate-700 font-medium flex items-center gap-1">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i> 37 MB
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: FLAGSHIP POSTER SHOWCASE ================= -->
+  <section id="poster-section" class="py-16 sm:py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-100 pb-5">
+        <div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-semibold border border-teal-200">
+            <i data-lucide="map" class="w-3.5 h-3.5 text-teal-600"></i> 全景導覽海報
+          </span>
+          <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+            《南投國中永續綠校園》旗艦全景海報
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-600 mt-1">
+            資料夾新增之 5.7 MB 高畫質全景空間導覽海報，點擊即可開啟高解析全景燈箱檢視。
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="openLightbox('1151102-115南投國中_環境教育考評南投國中永續綠校園.png', '南投國中永續綠校園全景導覽海報')" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-teal-600/20">
+            <i data-lucide="zoom-in" class="w-4 h-4"></i>
+            <span>全螢幕放大檢視海報</span>
+          </button>
+          <a href="1151102-115南投國中_環境教育考評南投國中永續綠校園.png" download class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs flex items-center gap-1.5 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>下載原圖 (5.7MB)</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Poster Big Banner Container -->
+      <div class="relative rounded-3xl overflow-hidden bg-slate-950 aspect-[21/9] sm:aspect-[24/9] border border-slate-200 shadow-xl cursor-pointer group" onclick="openLightbox('1151102-115南投國中_環境教育考評南投國中永續綠校園.png', '南投國中永續綠校園全景導覽海報')">
+        <img src="1151102-115南投國中_環境教育考評南投國中永續綠校園.png" alt="南投國中永續綠校園全景導覽海報" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500" />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="text-sm text-white font-medium flex items-center gap-2 bg-black/60 px-4 py-2 rounded-xl backdrop-blur-md">
+            <i data-lucide="zoom-in" class="w-4 h-4 text-emerald-400"></i>
+            <span>點擊開啟高解析全景互動燈箱檢視完整細節</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION 1: PRINCIPAL SPEECH & CUE CARDS ================= -->
+  <section id="direction-1" class="py-16 sm:py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-100 pb-6">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+            <i data-lucide="mic" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>呈現方向一</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+            校長口頭報告講稿與每頁提詞重點
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 mt-1">
+            針對 10~15 分鐘口頭簡報量身打造：提煉亮點關鍵字、時間配比、口語化逐字稿與上台提詞指引。
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="openSlidesModal(1)" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-eco-600 hover:bg-eco-500 text-white font-bold text-xs sm:text-sm shadow-md shadow-eco-600/20 transition-all">
+            <i data-lucide="play" class="w-4 h-4"></i>
+            <span>進入演講播放模式</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Speech Golden Rules & Overview Card -->
+      <div class="bg-gradient-to-br from-emerald-900 to-forest rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+        <div class="grid lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-4 space-y-3 border-b lg:border-b-0 lg:border-r border-emerald-800/80 pb-6 lg:pb-0 lg:pr-6">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">SPEECH METRICS</span>
+            <h3 class="text-2xl font-black">劉松彥 校長 簡報時間指南</h3>
+            <div class="space-y-2 text-xs sm:text-sm text-emerald-100">
+              <p>⏱️ <strong>建議演講總長</strong>：12 分鐘（保留 5~8 分鐘委員雙向交流）</p>
+              <p>🗣️ <strong>建議語速與基調</strong>：每分鐘約 200~220 字，沉穩篤定、生動熱忱</p>
+              <p>🌟 <strong>四大必提亮眼數據</strong>：</p>
+              <ul class="list-disc list-inside text-xs text-amber-200 space-y-1 pl-1">
+                <li>100% 依法取得專業環境教育人員認證</li>
+                <li>南投縣環境教育教案競賽『全縣佳作』</li>
+                <li>第三屆全國海洋科普繪本大賽『全國第一名《鯨喜》』</li>
+                <li>南投縣環境知識競賽『全縣初賽優勝』</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="lg:col-span-8 space-y-3">
+            <h4 class="text-sm font-bold text-emerald-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="award" class="w-4 h-4 text-amber-400"></i> 校長口頭報告四大黃金心法（Golden Rules）
+            </h4>
+            <div class="grid sm:grid-cols-2 gap-3 text-xs text-emerald-100">
+              <div class="p-3 rounded-xl bg-white/10 border border-white/10">
+                <strong class="text-white block mb-1">1. 開門見山破題</strong>
+                第 1 頁破題點出『永續投中 · 綠色共好』核心願景，展現全校親師生團隊凝聚力。
+              </div>
+              <div class="p-3 rounded-xl bg-white/10 border border-white/10">
+                <strong class="text-white block mb-1">2. 頂尖亮點加重語氣</strong>
+                講到第 15 頁 AI 太陽能小車佳作、第 25 頁全國海洋繪本首獎時，放慢語速、語調自豪！
+              </div>
+              <div class="p-3 rounded-xl bg-white/10 border border-white/10">
+                <strong class="text-white block mb-1">3. 動人故事溫暖人心</strong>
+                第 16 頁特教農場帶入特教孩子親手採收青菜的生命成長，呈現真正的教育平權。
+              </div>
+              <div class="p-3 rounded-xl bg-white/10 border border-white/10">
+                <strong class="text-white block mb-1">4. 嚴格控時不超時</strong>
+                平均每頁投影片停留約 25~35 秒，重點頁（15, 16, 23, 25）停留 50 秒，不拖泥帶水。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide Cue Cards Container (27 Slides) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span>27 頁投影片逐頁提詞卡（點擊可展開詳細逐字稿）</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">共 27 頁</span>
+          </h3>
+          <div class="text-xs text-slate-500">
+            支援快速搜尋或依頁次跳轉
+          </div>
+        </div>
+
+        <div id="speechCardsContainer" class="space-y-3">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION 2: EVALUATION COMMITTEE Q&A ================= -->
+  <section id="direction-2" class="py-16 sm:py-20 bg-slate-100/70 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+      <!-- Section Header -->
+      <div class="border-b border-slate-200/80 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+          <i data-lucide="help-circle" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>呈現方向二</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+          輔導訪視委員常見提問與 Q&A 擬答準備
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-1">
+          直擊評鑑盲點與核心亮點：涵蓋法定 4 小時申報、學年度範疇、跨領域實施、海洋科普特優、生態池防蚊等 8 大關鍵防禦題庫。
+        </p>
+      </div>
+
+      <!-- Q&A Categories Filter Buttons -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="qnaFilterBtns">
+        <button onclick="filterQnA('all')" class="qna-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-amber-500 text-white shadow-md shadow-amber-500/20">
+          全部題庫 (8題)
+        </button>
+        <button onclick="filterQnA('法規與時數')" class="qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200">
+          法規與時數
+        </button>
+        <button onclick="filterQnA('行政與組織')" class="qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200">
+          行政與學年度
+        </button>
+        <button onclick="filterQnA('課程與教學')" class="qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200">
+          課程與特教
+        </button>
+        <button onclick="filterQnA('特色與拔尖')" class="qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200">
+          全國海洋繪本首獎
+        </button>
+        <button onclick="filterQnA('校園環境與行政')" class="qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200">
+          生態池與防蚊
+        </button>
+      </div>
+
+      <!-- Q&A Accordion List -->
+      <div id="qnaContainer" class="space-y-4">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION 3: SLIDE PROOFREADING & OPTIMIZATION ================= -->
+  <section id="direction-3" class="py-16 sm:py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+      <!-- Section Header -->
+      <div class="border-b border-slate-100 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold">
+          <i data-lucide="edit-3" class="w-3.5 h-3.5 text-teal-600"></i>
+          <span>呈現方向三</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+          投影片內容校對與排版優化建議
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-1">
+          深度診斷 <a href="115南投國中_環境教育考評複評到校輔導.pptx" class="text-teal-700 underline font-semibold">115南投國中_環境教育考評複評到校輔導.pptx</a> 原檔：學年度統一修訂、章節頁視覺增潤、圖說三要素與逐頁修潤對照。
+        </p>
+      </div>
+
+      <!-- General Diagnostic Issues Grid -->
+      <div class="grid md:grid-cols-2 gap-6" id="generalIssuesContainer">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- Slide-by-Slide Proofreading Table -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+            <span>27 頁簡報逐頁修潤與文字增強對照表</span>
+          </h3>
+          <span class="text-xs text-slate-500">已全面檢核 1~27 頁</span>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white">
+          <table class="w-full text-left text-sm text-slate-700">
+            <thead class="bg-slate-50 border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wider">
+              <tr>
+                <th scope="col" class="py-3.5 px-4 w-16 text-center">頁次</th>
+                <th scope="col" class="py-3.5 px-4 w-1/3">原投影片現有內容</th>
+                <th scope="col" class="py-3.5 px-4">校對診斷與具體文字/排版優化建議</th>
+                <th scope="col" class="py-3.5 px-4 w-28 text-center">預覽簡報</th>
+              </tr>
+            </thead>
+            <tbody id="slideBySlideTableBody" class="divide-y divide-slate-100">
+              <!-- Rendered dynamically by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= DIRECTION 4: TASK CHECKLIST & ASSET GALLERY ================= -->
+  <section id="direction-4" class="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+      <!-- Section Header -->
+      <div class="border-b border-slate-200/80 pb-6">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold">
+          <i data-lucide="folder-check" class="w-3.5 h-3.5 text-purple-600"></i>
+          <span>呈現方向四</span>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight mt-2 flex items-center gap-2">
+          其他指定任務與文件產出專區
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-1">
+          訪視當日作業流程表、現場書面實體佐證清單、原始簡報檔案下載與 110 張真實相片成果庫。
+        </p>
+      </div>
+
+      <!-- Schedule & Checklist Row -->
+      <div class="grid lg:grid-cols-12 gap-8">
+        
+        <!-- Left: Visit Day Agenda Schedule -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="clock" class="w-5 h-5 text-purple-600"></i>
+              <span>115年11月2日 訪視輔導作業流程備忘</span>
+            </h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 font-semibold">當日行程</span>
+          </div>
+
+          <div class="space-y-3" id="agendaScheduleContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Right: Self-Evaluation Checklist -->
+        <div class="lg:col-span-6 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="check-square" class="w-5 h-5 text-eco-600"></i>
+              <span>考評現場書面與實體佐證檢核清單</span>
+            </h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-eco-100 text-eco-800 font-semibold">100% 備齊</span>
+          </div>
+
+          <div class="space-y-3" id="checklistContainer">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo Gallery (110 Real Photos) -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="image" class="w-5 h-5 text-blue-600"></i>
+            <span>活動佐證相片庫（110張真實紀錄）</span>
+          </h3>
+          <span class="text-xs text-slate-500">點擊可放大檢視高解析度原圖</span>
+        </div>
+
+        <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-slate-950 text-slate-400 text-xs sm:text-sm py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div class="md:col-span-6 space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-eco-600 flex items-center justify-center text-white">
+              <i data-lucide="leaf" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <span class="text-white font-black text-base">南投縣立南投國民中學</span>
+              <p class="text-xs text-slate-500">Nantou County Nantou Junior High School</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed max-w-md">
+            115 學年度環境教育考評複評到校訪視輔導旗艦網。全方位整合專題紀錄片、成果手冊、全景海報、校長報告講稿、委員 Q&A 擬答、簡報校對優化與指定任務文件庫。
+          </p>
+          <div class="text-xs text-slate-400 space-y-1">
+            <p>📍 校址：540 南投縣南投市祖祠路 360 號</p>
+            <p>📞 電話：(049) 222-2549 ｜ 傳真：(049) 222-6831</p>
+          </div>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <h4 class="text-white text-xs font-bold uppercase tracking-wider">專區快捷導覽</h4>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="#media-section" class="hover:text-purple-400 transition-colors">🎥 專題紀錄片（2部）</a></li>
+            <li><a href="#books-section" class="hover:text-amber-400 transition-colors">📑 成果手冊與簡報（3冊+PPTX）</a></li>
+            <li><a href="#poster-section" class="hover:text-teal-400 transition-colors">🗺️ 永續綠校園全景海報</a></li>
+            <li><a href="#direction-1" class="hover:text-eco-400 transition-colors">1. 校長口頭講稿與提詞</a></li>
+            <li><a href="#direction-2" class="hover:text-eco-400 transition-colors">2. 訪視委員常見提問 Q&A</a></li>
+            <li><a href="#direction-3" class="hover:text-eco-400 transition-colors">3. 投影片內容校對優化</a></li>
+            <li><a href="#direction-4" class="hover:text-eco-400 transition-colors">4. 指定任務與檢核文件</a></li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3 space-y-2">
+          <h4 class="text-white text-xs font-bold uppercase tracking-wider">平台維護與部署</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            由南投國中環境教育推動小組編製，部署於 GitHub Pages 雲端靜態平台，具備行動裝置自適應、影片串流播放與原檔下載支援。
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[11px] text-emerald-400">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>GitHub Pages 永續部署</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div>
+          版權所有 © 115學年度 南投縣立南投國民中學 Nantou Junior High School. All Rights Reserved.
+        </div>
+        <div>
+          <a href="#hero" class="hover:text-slate-300 transition-colors flex items-center gap-1">
+            <span>回到頁首</span>
+            <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= PRESENTATION SLIDES MODAL (27 SLIDES) ================= -->
+  <div id="slidesModal" class="fixed inset-0 z-50 hidden bg-slate-950/90 backdrop-blur-md flex flex-col transition-opacity">
+    <div class="glass-nav border-b border-slate-700/80 px-4 sm:px-6 py-3 flex items-center justify-between text-slate-100 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-eco-600 flex items-center justify-center text-white">
+          <i data-lucide="presentation" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="text-xs text-eco-400 font-semibold tracking-wide">南投國中 115學年度環境教育考評複評</span>
+          <h3 id="modalSlideTitle" class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+            投影片播放中
+          </h3>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-4">
+        <select id="slideSelect" onchange="goToSlide(parseInt(this.value))" class="bg-slate-800 border border-slate-700 text-xs text-white rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-eco-500">
+        </select>
+        <button onclick="closeSlidesModal()" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center justify-center max-w-6xl mx-auto w-full">
+      <div class="w-full bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+        <div class="bg-slate-950/80 px-4 sm:px-6 py-2.5 border-b border-slate-800 flex items-center justify-between text-xs text-slate-300">
+          <div class="flex items-center gap-2">
+            <span id="modalSlideIndexBadge" class="px-2 py-0.5 rounded bg-eco-600 text-white font-bold">第 1 / 27 頁</span>
+            <span id="modalSlideCategory" class="text-slate-400">大綱與封面</span>
+          </div>
+          <div class="text-[11px] text-slate-400 hidden sm:block">
+            支援鍵盤左／右方向鍵切換 ◀ ▶
+          </div>
+        </div>
+
+        <div id="modalSlideImages" class="p-4 sm:p-8 min-h-[300px] sm:min-h-[420px] flex items-center justify-center bg-slate-900/60">
+        </div>
+
+        <div class="bg-slate-950 p-4 sm:p-6 border-t border-slate-800">
+          <div class="flex items-center gap-2 text-amber-400 text-xs font-bold mb-2">
+            <i data-lucide="mic" class="w-4 h-4"></i>
+            <span>劉松彥校長 報告講稿提詞與重點備忘：</span>
+          </div>
+          <p id="modalSlideSpeechNote" class="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans">
+            講稿內容載入中...
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between w-full mt-4 text-white">
+        <button onclick="prevSlide()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs sm:text-sm font-semibold transition-all">
+          <i data-lucide="chevron-left" class="w-4 h-4"></i>
+          <span>上一頁</span>
+        </button>
+
+        <span id="modalSlideCounter" class="text-xs font-semibold text-slate-400">
+          1 / 27
+        </span>
+
+        <button onclick="nextSlide()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-eco-600 hover:bg-eco-500 text-xs sm:text-sm font-semibold transition-all shadow-md shadow-eco-600/20">
+          <span>下一頁</span>
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= IMAGE LIGHTBOX MODAL ================= -->
+  <div id="lightboxModal" class="fixed inset-0 z-50 hidden bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6">
+    <div class="flex items-center justify-between text-white pb-3 border-b border-white/10 shrink-0">
+      <div class="flex items-center gap-2 text-xs sm:text-sm text-slate-300">
+        <i data-lucide="image" class="w-4 h-4 text-emerald-400"></i>
+        <span id="lightboxCaption">佐證照片高解析預覽</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a id="lightboxDownloadBtn" href="#" download class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors text-xs flex items-center gap-1.5">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">下載原圖</span>
+        </a>
+        <button onclick="closeLightbox()" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex-1 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
+      <img id="lightboxImage" src="" alt="放大照片" class="max-w-full max-h-[82vh] object-contain rounded-lg shadow-2xl transition-all" />
+    </div>
+
+    <div class="text-center text-xs text-slate-400 py-2 border-t border-white/10 shrink-0">
+      南投國中 115學年度環境教育考評佐證紀錄 ｜ 支援 ESC 鍵退出
+    </div>
+  </div>
+
+  <!-- Data Script -->
+  <script src="data.js"></script>
+
+  <!-- Interactive Application Logic -->
+  <script>
+    let currentSlide = 1;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Render Direction 1: Speech Cue Cards
+      renderSpeechCards(window.SPEECH_DATA.slides);
+
+      // 2. Render Direction 2: Q&A
+      renderQnA(window.QNA_DATA);
+
+      // 3. Render Direction 3: Proofreading Issues & Slide Table
+      renderProofreading(window.PROOFREADING_DATA);
+
+      // 4. Render Direction 4: Agenda, Checklist & Gallery
+      renderTaskSupport(window.TASK_SUPPORT_DATA);
+      renderGallery();
+
+      // 5. Populate Slide Modal dropdown
+      populateSlideSelect();
+
+      // 6. Init Lucide Icons
+      lucide.createIcons();
+
+      // Keyboard listener
+      document.addEventListener('keydown', (e) => {
+        const slideModal = document.getElementById('slidesModal');
+        const lbModal = document.getElementById('lightboxModal');
+        if (!slideModal.classList.contains('hidden')) {
+          if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') nextSlide();
+          else if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+          else if (e.key === 'Escape') closeSlidesModal();
+        } else if (!lbModal.classList.contains('hidden')) {
+          if (e.key === 'Escape') closeLightbox();
+        }
+      });
+
+      // Mobile Menu
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (mobileBtn && mobileMenu) {
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+          link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+      }
+    });
+
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (mobileMenu) mobileMenu.classList.add('hidden');
+    }
+
+    // Hero Tab Switcher
+    function switchHeroTab(tab) {
+      document.querySelectorAll('.hero-tab-btn').forEach(btn => {
+        btn.className = 'hero-tab-btn px-2.5 py-1 rounded-lg font-semibold text-slate-300 hover:text-white transition-all';
+      });
+      const activeBtn = document.getElementById('heroTab-' + tab);
+      if (activeBtn) activeBtn.className = 'hero-tab-btn active px-2.5 py-1 rounded-lg font-bold bg-purple-600 text-white transition-all';
+
+      ['video', 'poster', 'books'].forEach(t => {
+        const content = document.getElementById('heroContent-' + t);
+        if (content) {
+          if (t === tab) content.classList.remove('hidden');
+          else content.classList.add('hidden');
+        }
+      });
+    }
+
+    // ================= RENDER DIRECTION 1: SPEECH CARDS =================
+    function renderSpeechCards(slides) {
+      const container = document.getElementById('speechCardsContainer');
+      if (!container) return;
+
+      container.innerHTML = slides.map(item => {
+        const slideObj = window.SLIDES_DATA.find(s => s.slide === item.slide);
+        const hasImgs = slideObj && slideObj.images && slideObj.images.length > 0;
+        const thumbImg = hasImgs ? 'images/' + slideObj.images[0] : 'images/image1.jpeg';
+
+        return \`
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden transition-all hover:border-emerald-300">
+            <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer" onclick="toggleSpeechCard(\${item.slide})">
+              <div class="flex items-center gap-3">
+                <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 font-black text-sm flex items-center justify-center shrink-0">
+                  \${item.slide}
+                </span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-600">\${item.timing}</span>
+                    <span class="text-xs font-semibold text-emerald-600 hidden sm:inline">\${item.cueTip}</span>
+                  </div>
+                  <h4 class="text-sm sm:text-base font-bold text-slate-900 mt-0.5">
+                    \${item.title}
+                  </h4>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2 self-end sm:self-center">
+                <div class="flex flex-wrap gap-1">
+                  \${item.keywords.map(k => \`<span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-medium border border-emerald-200">\${k}</span>\`).join('')}
+                </div>
+                <button class="p-1 rounded-lg text-slate-400 hover:text-slate-600" id="speechToggleIcon-\${item.slide}">
+                  <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+
+            <div id="speechBody-\${item.slide}" class="hidden border-t border-slate-100 bg-slate-50/70 p-4 sm:p-6">
+              <div class="grid md:grid-cols-12 gap-4 items-start">
+                <div class="md:col-span-3">
+                  <div class="rounded-xl overflow-hidden border border-slate-200 shadow-sm cursor-pointer group aspect-[4/3] bg-black" onclick="openSlidesModal(\${item.slide})">
+                    <img src="\${thumbImg}" alt="投影片 \${item.slide}" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                  </div>
+                  <button onclick="openSlidesModal(\${item.slide})" class="w-full mt-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold flex items-center justify-center gap-1 transition-colors">
+                    <i data-lucide="presentation" class="w-3.5 h-3.5"></i>
+                    <span>全螢幕檢視本頁</span>
+                  </button>
+                </div>
+
+                <div class="md:col-span-9 space-y-3">
+                  <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+                    <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
+                      <i data-lucide="mic" class="w-3.5 h-3.5"></i> 劉松彥校長 口頭報告逐字稿：
+                    </span>
+                    <p class="text-sm text-slate-800 leading-relaxed font-sans font-medium">
+                      \${item.speech}
+                    </p>
+                  </div>
+
+                  <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500 bg-emerald-50/60 p-3 rounded-xl border border-emerald-100">
+                    <div>
+                      <strong class="text-emerald-800">💡 提詞秘訣：</strong>
+                      <span class="text-slate-700">\${item.cueTip}</span>
+                    </div>
+                    <div>
+                      <strong class="text-emerald-800">建議時間：</strong>
+                      <span>\${item.timing}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        \`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function toggleSpeechCard(slideNum) {
+      const body = document.getElementById('speechBody-' + slideNum);
+      const icon = document.getElementById('speechToggleIcon-' + slideNum);
+      if (!body) return;
+      body.classList.toggle('hidden');
+      if (icon) {
+        icon.innerHTML = body.classList.contains('hidden') ? '<i data-lucide="chevron-down" class="w-5 h-5"></i>' : '<i data-lucide="chevron-up" class="w-5 h-5"></i>';
+        lucide.createIcons();
+      }
+    }
+
+    // ================= RENDER DIRECTION 2: Q&A =================
+    function renderQnA(qnaItems) {
+      const container = document.getElementById('qnaContainer');
+      if (!container) return;
+
+      container.innerHTML = qnaItems.map(item => {
+        return \`
+          <div class="qna-card bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden" data-category="\${item.category}">
+            <div class="p-5 flex items-start justify-between gap-4 cursor-pointer hover:bg-slate-50/80 transition-colors" onclick="toggleQnA('\${item.id}')">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200">
+                    \${item.badge}
+                  </span>
+                  <span class="text-xs font-semibold text-slate-500">\${item.category}</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                  \${item.question}
+                </h3>
+              </div>
+              <button class="p-1 rounded-lg text-slate-400 hover:text-slate-600 shrink-0 mt-1" id="qnaToggleIcon-\${item.id}">
+                <i data-lucide="chevron-down" class="w-5 h-5"></i>
+              </button>
+            </div>
+
+            <div id="qnaBody-\${item.id}" class="hidden border-t border-slate-100 bg-amber-50/20 p-5 sm:p-6 space-y-4">
+              <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-white border border-amber-200/60 shadow-xs">
+                  <strong class="text-amber-800 block mb-1">🎯 委員關切盲點與評鑑意圖：</strong>
+                  <p class="text-slate-600 leading-relaxed">\${item.evaluatorIntent}</p>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-emerald-200/60 shadow-xs">
+                  <strong class="text-emerald-800 block mb-1">💡 最佳回答策略與切入點：</strong>
+                  <p class="text-slate-600 leading-relaxed">\${item.keyStrategy}</p>
+                </div>
+              </div>
+
+              <div class="p-4 sm:p-5 rounded-xl bg-white border border-slate-200 shadow-sm">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-slate-800 mb-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-eco-600"></i>
+                  <span>建議正式擬答範本（劉松彥校長／業務主任）：</span>
+                </div>
+                <p class="text-sm text-slate-800 leading-relaxed font-sans font-medium whitespace-pre-line">
+                  \${item.answer}
+                </p>
+              </div>
+            </div>
+          </div>
+        \`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function toggleQnA(id) {
+      const body = document.getElementById('qnaBody-' + id);
+      const icon = document.getElementById('qnaToggleIcon-' + id);
+      if (!body) return;
+      body.classList.toggle('hidden');
+      if (icon) {
+        icon.innerHTML = body.classList.contains('hidden') ? '<i data-lucide="chevron-down" class="w-5 h-5"></i>' : '<i data-lucide="chevron-up" class="w-5 h-5"></i>';
+        lucide.createIcons();
+      }
+    }
+
+    function filterQnA(cat) {
+      document.querySelectorAll('.qna-btn').forEach(btn => {
+        btn.className = 'qna-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-slate-700 hover:bg-slate-50 border border-slate-200';
+      });
+      event.target.className = 'qna-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-amber-500 text-white shadow-md shadow-amber-500/20';
+
+      document.querySelectorAll('.qna-card').forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-category').includes(cat)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // ================= RENDER DIRECTION 3: PROOFREADING =================
+    function renderProofreading(pfData) {
+      const issuesContainer = document.getElementById('generalIssuesContainer');
+      if (issuesContainer) {
+        issuesContainer.innerHTML = pfData.generalReview.map((iss, idx) => {
+          return \`
+            <div class="p-5 sm:p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+              <div class="flex items-center gap-2">
+                <span class="w-6 h-6 rounded-lg bg-teal-600 text-white font-bold text-xs flex items-center justify-center">
+                  \${idx + 1}
+                </span>
+                <h4 class="font-bold text-slate-900 text-base">診斷要點：\${iss.issue}</h4>
+              </div>
+
+              <div class="space-y-1.5 text-xs text-slate-600">
+                <p><strong class="text-rose-700">⚠️ 現存問題：</strong>\${iss.original}</p>
+                <p><strong class="text-amber-800">🔍 潛在影響：</strong>\${iss.impact}</p>
+              </div>
+
+              <div class="p-3 rounded-xl bg-white border border-teal-200 text-xs">
+                <strong class="text-teal-800 block mb-1">🛠️ 具體修訂建議：</strong>
+                <p class="text-slate-800 leading-relaxed font-medium">\${iss.recommendation}</p>
+              </div>
+            </div>
+          \`;
+        }).join('');
+      }
+
+      const tbody = document.getElementById('slideBySlideTableBody');
+      if (tbody) {
+        tbody.innerHTML = pfData.slideBySlide.map(item => {
+          return \`
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-3 px-4 text-center font-bold text-slate-900 bg-slate-50/50">
+                \${item.slide}
+              </td>
+              <td class="py-3 px-4 text-xs text-slate-600 leading-relaxed font-mono">
+                \${item.current}
+              </td>
+              <td class="py-3 px-4 text-xs text-teal-900 leading-relaxed font-medium">
+                \${item.fix}
+              </td>
+              <td class="py-3 px-4 text-center">
+                <button onclick="openSlidesModal(\${item.slide})" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors flex items-center gap-1 mx-auto">
+                  <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  <span>第\${item.slide}頁</span>
+                </button>
+              </td>
+            </tr>
+          \`;
+        }).join('');
+      }
+      lucide.createIcons();
+    }
+
+    // ================= RENDER DIRECTION 4: TASK SUPPORT =================
+    function renderTaskSupport(taskData) {
+      const agendaEl = document.getElementById('agendaScheduleContainer');
+      if (agendaEl) {
+        agendaEl.innerHTML = taskData.inspectionDaySchedule.map(s => {
+          return \`
+            <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <div class="px-2 py-1 rounded bg-purple-100 text-purple-900 font-mono text-xs font-bold whitespace-nowrap">
+                \${s.time}
+              </div>
+              <div class="flex-1 space-y-0.5">
+                <div class="text-xs font-bold text-slate-900">\${s.event}</div>
+                <div class="text-[11px] text-slate-500">地點：\${s.location} ｜ 主責：\${s.pic}</div>
+              </div>
+            </div>
+          \`;
+        }).join('');
+      }
+
+      const chkEl = document.getElementById('checklistContainer');
+      if (chkEl) {
+        chkEl.innerHTML = taskData.checklist.map(c => {
+          return \`
+            <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100">
+              <i data-lucide="check-circle" class="w-4 h-4 text-eco-600 shrink-0 mt-0.5"></i>
+              <div class="flex-1 space-y-0.5">
+                <div class="text-xs font-bold text-slate-900">\${c.item}</div>
+                <div class="text-[11px] text-slate-500">\${c.note}</div>
+              </div>
+              <span class="px-2 py-0.5 rounded-full bg-eco-100 text-eco-800 text-[10px] font-bold">
+                \${c.status}
+              </span>
+            </div>
+          \`;
+        }).join('');
+      }
+      lucide.createIcons();
+    }
+
+    // ================= RENDER GALLERY =================
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      if (!grid) return;
+
+      const allImgs = [];
+      window.SLIDES_DATA.forEach(s => {
+        s.images.forEach(img => {
+          allImgs.push({
+            slide: s.slide,
+            file: img,
+            title: s.texts.join(' ').slice(0, 30) || '投影片第 ' + s.slide + ' 頁佐證'
+          });
+        });
+      });
+
+      grid.innerHTML = allImgs.slice(0, 30).map(item => {
+        return \`
+          <div
+            class="relative aspect-square rounded-xl overflow-hidden bg-slate-800 group cursor-pointer border border-slate-200 hover:border-emerald-500 transition-all shadow-sm"
+            onclick="openLightbox('images/\${item.file}', '【投影片 \${item.slide}】\${item.title}')"
+          >
+            <img src="images/\${item.file}" alt="\${item.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-2.5">
+              <span class="text-[10px] font-bold text-emerald-400">Slide \${item.slide}</span>
+              <p class="text-xs text-white truncate font-medium">\${item.title}</p>
+            </div>
+          </div>
+        \`;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    // ================= SLIDE MODAL LOGIC =================
+    function populateSlideSelect() {
+      const select = document.getElementById('slideSelect');
+      if (!select) return;
+      select.innerHTML = window.SLIDES_DATA.map(s => {
+        const titleSnippet = s.texts.join(' ').slice(0, 24) || '投影片 ' + s.slide;
+        return '<option value="' + s.slide + '">第 ' + s.slide + ' 頁：' + titleSnippet + '</option>';
+      }).join('');
+    }
+
+    function openSlidesModal(slideNumber = 1) {
+      currentSlide = slideNumber;
+      const modal = document.getElementById('slidesModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      updateSlideModalView();
+    }
+
+    function closeSlidesModal() {
+      const modal = document.getElementById('slidesModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum < 1) slideNum = 1;
+      if (slideNum > window.SLIDES_DATA.length) slideNum = window.SLIDES_DATA.length;
+      currentSlide = slideNum;
+      updateSlideModalView();
+    }
+
+    function nextSlide() {
+      if (currentSlide < window.SLIDES_DATA.length) {
+        currentSlide++;
+        updateSlideModalView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlideModalView();
+      }
+    }
+
+    function updateSlideModalView() {
+      const slide = window.SLIDES_DATA.find(s => s.slide === currentSlide);
+      if (!slide) return;
+
+      const select = document.getElementById('slideSelect');
+      if (select) select.value = currentSlide;
+
+      const indexBadge = document.getElementById('modalSlideIndexBadge');
+      if (indexBadge) indexBadge.textContent = '第 ' + slide.slide + ' / ' + window.SLIDES_DATA.length + ' 頁';
+
+      const catBadge = document.getElementById('modalSlideCategory');
+      if (catBadge) catBadge.textContent = slide.section;
+
+      const titleEl = document.getElementById('modalSlideTitle');
+      if (titleEl) titleEl.textContent = slide.texts.join(' ｜ ').slice(0, 60) || '第 ' + slide.slide + ' 頁投影片';
+
+      const counterEl = document.getElementById('modalSlideCounter');
+      if (counterEl) counterEl.textContent = slide.slide + ' / ' + window.SLIDES_DATA.length;
+
+      const speechEl = document.getElementById('modalSlideSpeechNote');
+      if (speechEl) {
+        const spItem = window.SPEECH_DATA.slides.find(s => s.slide === currentSlide);
+        speechEl.textContent = spItem ? spItem.speech : slide.speechNote;
+      }
+
+      const imagesContainer = document.getElementById('modalSlideImages');
+      if (imagesContainer) {
+        if (!slide.images || slide.images.length === 0) {
+          imagesContainer.innerHTML = \`
+            <div class="text-center p-8 text-slate-400">
+              <i data-lucide="file-text" class="w-12 h-12 text-slate-600 mx-auto mb-3"></i>
+              <p class="text-sm font-semibold">\${slide.texts.join(' ') || '純文字投影片'}</p>
+            </div>
+          \`;
+        } else if (slide.images.length === 1) {
+          imagesContainer.innerHTML = \`
+            <div class="max-w-2xl w-full rounded-xl overflow-hidden shadow-lg border border-slate-700 bg-black cursor-pointer group" onclick="openLightbox('images/\${slide.images[0]}', '\${slide.texts.join(' ')}')">
+              <img src="images/\${slide.images[0]}" alt="Slide Image" class="w-full max-h-[500px] object-contain mx-auto group-hover:scale-102 transition-transform" />
+            </div>
+          \`;
+        } else {
+          const gridCols = slide.images.length === 2 ? 'grid-cols-2' : slide.images.length <= 4 ? 'grid-cols-2 sm:grid-cols-2' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4';
+          imagesContainer.innerHTML = \`
+            <div class="grid \${gridCols} gap-3 w-full max-w-4xl">
+              \${slide.images.map(img => \`
+                <div class="aspect-[4/3] rounded-lg overflow-hidden border border-slate-800 bg-black/60 group cursor-pointer" onclick="openLightbox('images/\${img}', '\${slide.texts.join(' ')}')">
+                  <img src="images/\${img}" alt="Slide Image" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                </div>
+              \`).join('')}
+            </div>
+          \`;
+        }
+      }
+      lucide.createIcons();
+    }
+
+    // ================= LIGHTBOX LOGIC =================
+    function openLightbox(imgSrc, captionText) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImage');
+      const caption = document.getElementById('lightboxCaption');
+      const dlBtn = document.getElementById('lightboxDownloadBtn');
+      if (!modal || !img) return;
+
+      img.src = imgSrc;
+      if (caption) caption.textContent = captionText || '佐證照片放大檢視';
+      if (dlBtn) {
+        dlBtn.href = imgSrc;
+        dlBtn.setAttribute('download', imgSrc.split('/').pop());
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
+`;
+
+fs.writeFileSync('index.html', htmlContent, 'utf8');
+console.log('Successfully generated flagship index.html with top-level media, books, poster, and 4 directions!');
